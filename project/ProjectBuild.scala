@@ -2,7 +2,6 @@ import com.typesafe.sbt.digest.Import._
 import com.typesafe.sbt.gzip.Import._
 import com.typesafe.sbt.uglify.Import._
 import com.typesafe.sbt.web.Import._
-import play.PlayImport._
 import play.PlayScala
 import sbt.Keys._
 import sbt._
@@ -16,15 +15,37 @@ object ProjectBuild extends Build {
     id = "parent",
     base = file("."),
     settings = super.settings ++ sharedSettings
-  ).settings(
+  )
+  .settings(
     name := "OOO Master Utility"
-  ).aggregate(ui)
+  )
+  .aggregate(ui)
+
+  lazy val dbApi = Project(
+    id = "dbApi",
+    base = file("dbApi"),
+    settings = super.settings ++ sharedSettings
+  )
+  .settings(
+
+  )
+
+  lazy val dbApiImpl = Project(
+    id = "dbApiImpl",
+    base = file("dbApiImpl"),
+    settings = super.settings ++ sharedSettings
+  )
+  .settings(
+
+  )
+  .dependsOn(dbApi)
 
   lazy val ui = Project(
     id = "ui",
     base = file("ui"),
     settings = super.settings ++ sharedSettings
-  ).settings(
+  )
+  .settings(
     libraryDependencies ++= Seq(
       "com.google.inject" % "guice" % "4.0",
       "javax.inject" % "javax.inject" % "1",
@@ -44,7 +65,9 @@ object ProjectBuild extends Build {
     UglifyKeys.uglifyOps := { js =>
       Seq((js.sortBy(_._2), "concat.min.js"))
     }
-  ).enablePlugins(PlayScala)
+  )
+  .enablePlugins(PlayScala)
+  .dependsOn(dbApi, dbApiImpl)
 
   lazy val sharedSettings = super.settings ++ Seq(
     version := "1.0.0",
