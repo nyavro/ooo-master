@@ -1,18 +1,14 @@
 package controllers
 
 import java.io.File
-import javax.inject.{Singleton, Inject}
+import javax.inject.{Inject, Singleton}
+
+import org.slf4j.{Logger, LoggerFactory}
 import play.api.Play
 import play.api.Play.current
-import services.UUIDGenerator
-import org.slf4j.{LoggerFactory, Logger}
 import play.api.mvc._
+import services.UUIDGenerator
 
-/**
- * Instead of declaring an object of Application as per the template project, we must declare a class given that
- * the application context is going to be responsible for creating it and wiring it up with the UUID generator service.
- * @param uuidGenerator the UUID generator service we wish to receive.
- */
 @Singleton
 class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
 
@@ -20,28 +16,21 @@ class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
 
   def index = Action {
     logger.info("Serving index page...")
-
-    val javascripts = {
-      if (Play.isDev) {
-        // Load all .js and .coffeescript files within app/assets
-        Option(Play.getFile("app/assets")).
-          filter(_.exists).
-          map(findScripts).
-          getOrElse(Nil)
-      } else {
-        // Concated and minified by UglifyJS
-        "concat.min.js" :: Nil
-      }
-    }
-
-    Ok(views.html.index(javascripts))
+    Ok(
+      views.html.index(
+        if (Play.isDev)
+          Option(Play.getFile("app/assets"))
+            .filter(_.exists)
+            .map(findScripts)
+            .getOrElse(Nil)
+        else
+          List("concat.min.js")
+      )
+    )
   }
 
-  private def findScripts(base: File): Seq[String] = {
-    val baseUri = base.toURI
-    directoryFlatMap(base, scriptMapper).
-      map(f => baseUri.relativize(f.toURI).getPath)
-  }
+  private def findScripts(base: File): Seq[String] =
+    directoryFlatMap(base, scriptMapper).map(f => base.toURI.relativize(f.toURI).getPath)
 
   private def scriptMapper(file: File): Option[File] = {
     val name = file.getName
@@ -50,12 +39,11 @@ class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
     else None
   }
 
-  private def directoryFlatMap[A](in: File, fileFun: File => Option[A]): Seq[A] = {
+  private def directoryFlatMap[A](in: File, fileFun: File => Option[A]): Seq[A] =
     in.listFiles.flatMap {
       case f if f.isDirectory => directoryFlatMap(f, fileFun)
       case f if f.isFile => fileFun(f)
     }
-  }
 
   def randomUUID = Action {
     logger.info("calling UUIDGenerator...")

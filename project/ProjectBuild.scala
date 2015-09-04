@@ -17,7 +17,7 @@ object ProjectBuild extends Build {
     base = file("."),
     settings = super.settings ++ sharedSettings
   ).settings(
-    name := "Legal Entity"
+    name := "OOO Master Utility"
   ).aggregate(ui)
 
   lazy val ui = Project(
