@@ -1,17 +1,21 @@
-import com.eny.ooo.manager.person.{PersonRepositoryImpl, PersonRepository}
-import com.google.inject.{Guice, AbstractModule}
+import java.util.ServiceLoader
+
+import com.google.inject.{AbstractModule, Guice, Module}
 import play.api.GlobalSettings
 import services.{SimpleUUIDGenerator, UUIDGenerator}
 
+import scala.collection.JavaConversions._
+
 object Global extends GlobalSettings {
+
+  val runtimeModules = ServiceLoader.load(classOf[Module]).iterator.toList
 
   val injector = Guice.createInjector(
     new AbstractModule {
       protected def configure() = {
         bind(classOf[UUIDGenerator]).to(classOf[SimpleUUIDGenerator])
-        bind(classOf[PersonRepository]).to(classOf[PersonRepositoryImpl])
       }
-    }
+    } :: runtimeModules
   )
 
   override def getControllerInstance[A](controllerClass: Class[A]) = injector.getInstance(controllerClass)

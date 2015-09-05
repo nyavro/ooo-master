@@ -20,7 +20,7 @@ object ProjectBuild extends Build {
   .settings(
     name := "OOO Master Utility"
   )
-  .aggregate(ui)
+  .aggregate(ui, dbApi, dbImpl)
 
   lazy val dbApi = Project(
     id = "dbApi",
@@ -31,16 +31,21 @@ object ProjectBuild extends Build {
 
   )
 
-  lazy val dbApiImpl = Project(
-    id = "dbApiImpl",
-    base = file("dbApiImpl"),
-    settings = super.settings ++ sharedSettings
+  lazy val dbImpl = Project(
+    id = "dbImpl",
+    base = file("dbImpl"),
+    settings = super.settings ++ sharedSettings ++ Seq(
+      exportJars := true
+    )
   )
   .settings(
       libraryDependencies ++= Seq(
         "com.google.inject" % "guice" % "4.0",
         "javax.inject" % "javax.inject" % "1",
         "com.github.mauricio" % "mysql-async_2.11" % MysqlAsyncVersion
+      ),
+      mappings in (Compile, packageBin) ++= Seq(
+        (baseDirectory.value / "exports.txt") -> "META-INF/services/com.google.inject.Module"
       )
   )
   .dependsOn(dbApi)
@@ -72,7 +77,7 @@ object ProjectBuild extends Build {
     }
   )
   .enablePlugins(PlayScala)
-  .dependsOn(dbApi, dbApiImpl)
+  .dependsOn(dbApi, dbImpl % "runtime")
 
   lazy val sharedSettings = super.settings ++ Seq(
     version := "1.0.0",
