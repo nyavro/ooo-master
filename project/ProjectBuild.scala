@@ -10,6 +10,7 @@ object ProjectBuild extends Build {
 
   val ScalaVersion = "2.11.7"
   val ScalatestVersion = "3.0.0-M7"
+  val MysqlAsyncVersion = "0.2.18"
 
   lazy val parent = Project(
     id = "parent",
@@ -36,7 +37,11 @@ object ProjectBuild extends Build {
     settings = super.settings ++ sharedSettings
   )
   .settings(
-
+      libraryDependencies ++= Seq(
+        "com.google.inject" % "guice" % "4.0",
+        "javax.inject" % "javax.inject" % "1",
+        "com.github.mauricio" % "mysql-async_2.11" % MysqlAsyncVersion
+      )
   )
   .dependsOn(dbApi)
 

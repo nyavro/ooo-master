@@ -51,7 +51,7 @@ class Users extends Controller with MongoController {
       .sort(Json.obj("created" -> -1))
       .cursor[User].collect[List]()
       .map {
-        users => Json.arr(users)
+        Json.arr(_)
       }.map {
         users => Ok(users(0))
       }
