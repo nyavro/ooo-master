@@ -10,16 +10,16 @@ import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 
 @Singleton
-class DbImpl @Inject() (@Named("db.user") user:String) extends Db {
+class DbImpl @Inject() (
+     @Named("db.user")user:String,
+     @Named("db.host")host:String,
+     @Named("db.port")port:Int,
+     @Named("db.password")password:String,
+     @Named("db.database")db:String
+   ) extends Db {
   val name = user
 
-  val configuration = new Configuration(
-    "root",
-    "localhost",
-    port = 3306,
-    password = None,
-    database = Some("entity_master")
-  )
+  val configuration = new Configuration(user, host, port, if(password.equals("")) None else Some(password), Some(db))
 
   val connection = new MySQLConnection(configuration)
 
