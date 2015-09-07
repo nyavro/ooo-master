@@ -66,3 +66,63 @@
         </div>
 
     </div>
+<div ng-controller="PersonCtrl as pc">
+    <div class="jumbotron">
+        <h2>A Modern Web Template</h2>
+        <p class="pull-right">... a UI created using AngularJS and Bootstrap</p>
+    </div>
+
+    <div>
+        <div class="form-group">
+            <h3>
+                Users
+                <a ng-href="/#/users/create" class="btn btn-primary pull-right" id="btn_user_create">Add User</a>
+            </h3>
+            <hr>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" ng-model="searchText" placeholder="Type here to filter Users...">
+            <hr>
+        </div>
+
+        <table id="person_list" class="table table-striped">
+            <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="person in pc.persons | filter:searchText">
+                <td>{{person.name}}</td>
+                <td>{{person.middle}}</td>
+                <td>{{person.last}}</td>
+                <td>
+                    <a ng-href="/#/persons/edit/{{person.id}}" class="btn btn-success pull-right" id="btn_person_update">Edit Person</a>
+                </td>
+            </tr>
+            <tr ng-hide="pc.persons.length">
+                <td colspan="3">
+                    <p class="text-center">No Persons Found</p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>
+            Debug
+        </h3>
+        <hr>
+        <accordion>
+            <accordion-group is-open="status.open">
+                <accordion-heading>
+                    Json Data <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                </accordion-heading>
+                <pre>{{ uc.users | json }}</pre>
+            </accordion-group>
+        </accordion>
+    </div>
+
+</div>
+
