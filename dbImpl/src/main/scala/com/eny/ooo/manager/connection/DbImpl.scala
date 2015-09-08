@@ -1,13 +1,11 @@
 package com.eny.ooo.manager.connection
 
-import java.util.concurrent.TimeUnit
 import javax.inject.{Inject, Named, Singleton}
 
 import com.github.mauricio.async.db.Configuration
 import com.github.mauricio.async.db.mysql.MySQLConnection
-
-import scala.concurrent.Await
-import scala.concurrent.duration.Duration
+import com.github.mauricio.async.db.mysql.pool.MySQLConnectionFactory
+import com.github.mauricio.async.db.pool.{ConnectionPool, PoolConfiguration}
 
 @Singleton
 class DbImpl @Inject() (
@@ -17,11 +15,10 @@ class DbImpl @Inject() (
      @Named("db.password")password:String,
      @Named("db.database")db:String
    ) extends Db {
-  val name = user
 
   val configuration = new Configuration(user, host, port, if(password.equals("")) None else Some(password), Some(db))
 
-  val connection = new MySQLConnection(configuration)
+  override def pool() =
+    new ConnectionPool[MySQLConnection](new MySQLConnectionFactory(configuration), PoolConfiguration.Default)
 
-  Await.result(connection.connect, Duration(5, TimeUnit.SECONDS))
 }

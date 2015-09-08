@@ -1,9 +1,8 @@
 package com.eny.ooo.manager.connection
 
-import com.github.mauricio.async.db.Connection
+import com.github.mauricio.async.db.mysql.MySQLConnection
+import com.github.mauricio.async.db.pool.ConnectionPool
 
 trait Db {
-  def name():String
-
-  def connection():Connection
+  def pool():ConnectionPool[MySQLConnection]
 }
