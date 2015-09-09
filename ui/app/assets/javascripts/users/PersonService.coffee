@@ -34,11 +34,25 @@ class PersonService
     )
     deferred.promise
 
-  updatePerson: (name, last, middle, person) ->
+  load: (id) ->
+    deferred = @$q.defer()
+    @$log.debug "loading person #{id}"
+    @$http.get("/persons/#{id}")
+      .success((data, status, headers) =>
+        @$log.info("Person loaded - status #{status}")
+        deferred.resolve(data)
+      )
+      .error((data, status, headers) =>
+        @$log.error("Failed to load person - status #{status}")
+        deferred.reject(data)
+      )
+    deferred.promise
+
+  updatePerson: (id, person) ->
     @$log.debug "updatePerson #{angular.toJson(person, true)}"
     deferred = @$q.defer()
 
-    @$http.put("/person/#{firstName}/#{lastName}", person)
+    @$http.put("/person/#{id}", person)
     .success((data, status, headers) =>
       @$log.info("Successfully updated Person - status #{status}")
       deferred.resolve(data)

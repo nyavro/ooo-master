@@ -24,15 +24,6 @@
         </div>
 
         <div class="form-group">
-            <label id="lbl_firstName" for="firstName" class="col-sm-4 control-label">Middle</label>
-
-            <div class="col-sm-8">
-                <input type="text" class="form-control" name="firstName" id="firstName" placeholder=""
-                       ng-model="uuc.user.firstName">
-            </div>
-        </div>
-
-        <div class="form-group">
             <label id="lbl_age" for="age" class="col-sm-4 control-label"
                    is-required="CreateUserForm.age">Age</label>
 
@@ -59,6 +50,53 @@
                 <a ng-href="/#/" id="btn_cancel" class="btn btn-warning">Cancel</a>
 
                 <button type="submit" class="btn btn-success" id="btn_create">Update User</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+<div ng-controller="UpdatePersonCtrl as upc">
+    <h1>Create Person</h1>
+
+    <form id="UpdatePersonForm" name="UpdatePersonForm" class="form-horizontal" role="form"
+          ng-submit="upc.updatePerson()">
+        <legend class="sm-col-12">Basic Information</legend>
+
+        <div class="form-group">
+            <label id="lbl_last" for="last" class="col-sm-4 control-label">Last</label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="last" id="last" placeholder=""
+                       ng-model="upc.person.last">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_first" for="name" class="col-sm-4 control-label">Name</label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="name" id="name" placeholder=""
+                       ng-model="upc.person.name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label id="lbl_middle" for="middle" class="col-sm-4 control-label">Middle</label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="middle" id="middle" placeholder=""
+                       ng-model="upc.person.middle">
+            </div>
+        </div>
+
+        <pre>{{ upc.person | json }}</pre>
+
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8 text-right">
+                <a ng-href="/#/" id="cancel" class="btn btn-warning">Cancel</a>
+
+                <button type="submit" class="btn btn-success" id="create">Update Person</button>
             </div>
         </div>
 
