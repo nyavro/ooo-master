@@ -7,7 +7,7 @@ import com.eny.ooo.manager.person.{Person, PersonRepository}
 import com.eny.ooo.manager.user.User
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Result, Action, Controller}
 
 import scala.concurrent.Future
 
@@ -34,9 +34,19 @@ class Persons @Inject() (repository:PersonRepository) extends Controller {
     request =>
       request.body.validate[Person].map {
         person =>
-          for(
-            res <- repository.update(id, person)
-          ) yield res.map {_ => Created(s"Person Updated")}.getOrElse(BadRequest("Error occured"))
+          repository.update(id, person).map {
+            res => res.map { _ => Created(s"Person Updated")}.getOrElse(BadRequest("Error occured"))
+          }
+      }.getOrElse(Future.successful(BadRequest("invalid json")))
+  }
+
+  def create() = Action.async(parse.json) {
+    request =>
+      request.body.validate[Person].map {
+        person =>
+          repository.create(person).map {
+            res => res.map { _ => Created(s"Person Created")}.getOrElse(BadRequest("Error creating person"))
+          }
       }.getOrElse(Future.successful(BadRequest("invalid json")))
   }
 }

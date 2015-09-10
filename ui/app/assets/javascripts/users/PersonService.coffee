@@ -23,7 +23,7 @@ class PersonService
     @$log.debug "createPerson #{angular.toJson(person, true)}"
     deferred = @$q.defer()
 
-    @$http.post('/person', person)
+    @$http.post('/persons', person)
     .success((data, status, headers) =>
       @$log.info("Successfully created Person - status #{status}")
       deferred.resolve(data)
@@ -52,7 +52,7 @@ class PersonService
     @$log.debug "updatePerson #{angular.toJson(person, true)}"
     deferred = @$q.defer()
 
-    @$http.put("/person/#{id}", person)
+    @$http.put("/persons/#{id}", person)
     .success((data, status, headers) =>
       @$log.info("Successfully updated Person - status #{status}")
       deferred.resolve(data)

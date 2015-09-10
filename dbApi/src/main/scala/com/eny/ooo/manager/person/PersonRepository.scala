@@ -9,4 +9,6 @@ trait PersonRepository {
   def load(id:Long):Future[Option[Person]]
 
   def update(id:Long, person:Person):Future[Option[Person]]
+
+  def create(person:Person):Future[Option[Person]]
 }
