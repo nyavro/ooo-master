@@ -30,17 +30,13 @@ class Persons @Inject() (repository:PersonRepository) extends Controller {
       }
   }
 
-//  def updatePerson(id: Long) = Action.async(parse.json) {
-//    request =>
-//      request.body.validate[Person].map {
-//        user =>
-//          repository.update(id, user).map {
-//            res =>
-//              res match {
-//                case Some(x) => Created(s"Person Updated")
-//                case None => BadRequest("Error occured")
-//              }
-//          }
-//      }
-//  }
+  def update(id: Long) = Action.async(parse.json) {
+    request =>
+      request.body.validate[Person].map {
+        person =>
+          for(
+            res <- repository.update(id, person)
+          ) yield res.map {_ => Created(s"Person Updated")}.getOrElse(BadRequest("Error occured"))
+      }.getOrElse(Future.successful(BadRequest("invalid json")))
+  }
 }
