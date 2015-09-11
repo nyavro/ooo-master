@@ -1,4 +1,3 @@
-
 dependencies = [
     'ngRoute',
     'ui.bootstrap',
@@ -13,29 +12,22 @@ dependencies = [
 app = angular.module('myApp', dependencies)
 
 angular.module('myApp.routeConfig', ['ngRoute'])
-    .config(['$routeProvider', ($routeProvider) ->
-        $routeProvider
-            .when('/', {
-                templateUrl: '/assets/partials/view.html'
-            })
-            .when('/users/create', {
-                templateUrl: '/assets/partials/create.html'
-            })
-            .when('/persons/create', {
-                templateUrl: '/assets/partials/create.html'
-            })
-            .when('/users/edit/:firstName/:lastName', {
-                templateUrl: '/assets/partials/update.html'
-            })
-            .when('/persons/edit/:id', {
-                templateUrl: '/assets/partials/update.html'
-            })
-            .otherwise({redirectTo: '/'})])
-    .config(['$locationProvider', ($locationProvider) ->
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        })])
+    .config(
+        ['$routeProvider', ($routeProvider) ->
+            $routeProvider
+                .when('/', {templateUrl: '/assets/partials/view.html'})
+                .when('/persons/create', {templateUrl: '/assets/partials/create.html'})
+                .when('/persons/edit/:id', {templateUrl: '/assets/partials/update.html'})
+                .otherwise({redirectTo: '/'})
+        ]
+    )
+    .config(
+        ['$locationProvider', ($locationProvider) ->
+            $locationProvider.html5Mode(
+                {enabled: true, requireBase: false}
+            )
+        ]
+    )
 
 @commonModule = angular.module('myApp.common', [])
 @controllersModule = angular.module('myApp.controllers', [])
