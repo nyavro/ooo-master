@@ -1,6 +1,7 @@
 package com.eny.ooo.manager.person
 
 import scala.concurrent.Future
+import scala.util.Try
 
 trait PersonRepository {
 
@@ -10,5 +11,5 @@ trait PersonRepository {
 
   def update(id:Long, person:Person):Future[Option[Person]]
 
-  def create(person:Person):Future[Option[Person]]
+  def create(person:Person):Future[Try[Long]]
 }
