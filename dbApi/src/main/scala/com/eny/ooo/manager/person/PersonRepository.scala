@@ -12,4 +12,6 @@ trait PersonRepository {
   def update(id:Long, person:Person):Future[Option[Person]]
 
   def create(person:Person):Future[Try[Long]]
+
+  def delete(id: Long):Future[Try[Boolean]]
 }

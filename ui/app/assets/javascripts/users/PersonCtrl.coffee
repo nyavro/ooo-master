@@ -1,6 +1,6 @@
 class PersonCtrl
 
-    constructor: (@$log, @PersonService) ->
+    constructor: (@$log, @PersonService, @$location) ->
         @$log.debug "constructing PersonController"
         @persons = []
         @getAllPersosns()
@@ -17,4 +17,18 @@ class PersonCtrl
                 (error) =>
                     @$log.error "Unable to get Persons: #{error}"
             )
-controllersModule.controller('PersonCtrl', ['$log', 'PersonService', PersonCtrl])
+
+    delete: (id) ->
+        @$log.debug "delete person #{id}"
+        @PersonService
+            .delete(id)
+            .then(
+                (data) =>
+                    @$log.debug "Promise returned #{data} Person"
+                    @persons = @persons.filter (v) -> v.id != id
+                    @$location.path("/")
+                ,
+                (error) => @$log.error "Unable to delete Person: #{error}"
+            )
+
+controllersModule.controller('PersonCtrl', ['$log', 'PersonService', '$location', PersonCtrl])

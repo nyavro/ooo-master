@@ -9,6 +9,7 @@ import play.api.libs.json._
 import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 @Singleton
 class Persons @Inject() (repository:PersonRepository) extends Controller {
@@ -47,5 +48,12 @@ class Persons @Inject() (repository:PersonRepository) extends Controller {
             res => res.map { _ => Created(s"Person Created")}.getOrElse(BadRequest("Error creating person"))
           }
       }.getOrElse(Future.successful(BadRequest("invalid json")))
+  }
+
+  def delete(id: Long) = Action.async {
+    repository.delete(id).map {
+      case Success(x) => Ok("Succeeded")
+      case Failure(x) => BadRequest(x.getMessage)
+    }
   }
 }

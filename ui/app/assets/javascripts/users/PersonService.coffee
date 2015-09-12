@@ -63,4 +63,18 @@ class PersonService
     )
     deferred.promise
 
+  delete: (id) ->
+    @$log.debug "delete Person #{id}"
+    deferred = @$q.defer()
+    @$http.delete("/persons/#{id}")
+    .success((data, status, headers) =>
+      @$log.info("Successfully deleted Person - status #{status}")
+      deferred.resolve(data)
+    )
+    .error((data, status, header) =>
+      @$log.error("Failed to delete person - status #{status}")
+      deferred.reject(data)
+    )
+    deferred.promise
+
 servicesModule.service('PersonService', ['$log', '$http', '$q', PersonService])

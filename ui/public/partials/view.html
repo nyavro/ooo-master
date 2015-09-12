@@ -33,6 +33,9 @@
                 <td>
                     <a ng-href="/#/persons/edit/{{person.id}}" class="btn btn-success pull-right" id="btn_person_update">Edit Person</a>
                 </td>
+                <td>
+                    <a ng-click="pc.delete(person.id)" class="btn btn-success pull-right" id="btn_person_delete">Delete Person</a>
+                </td>
             </tr>
             <tr ng-hide="pc.persons.length">
                 <td colspan="3">

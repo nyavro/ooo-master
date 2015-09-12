@@ -5,13 +5,14 @@
 # ~~~~
 
 # Single endpoint for serving AngularJS
-GET         /                                 @controllers.Application.index
-GET         /randomUUID                       @controllers.Application.randomUUID
+GET         /                    @controllers.Application.index
+GET         /randomUUID          @controllers.Application.randomUUID
 
-GET         /persons                          @controllers.Persons.find
-GET         /persons/:id                      @controllers.Persons.load(id:Long)
-PUT         /persons/:id                      @controllers.Persons.update(id: Long)
-POST        /persons                          @controllers.Persons.create
+GET         /persons             @controllers.Persons.find
+GET         /persons/:id         @controllers.Persons.load(id:Long)
+PUT         /persons/:id         @controllers.Persons.update(id:Long)
+POST        /persons             @controllers.Persons.create
+DELETE      /persons/:id         @controllers.Persons.delete(id:Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)

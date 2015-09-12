@@ -38,17 +38,27 @@ class PersonRepositoryImpl @Inject() (db:Db) extends PersonRepository {
       connection <- db.pool().take;
       insert <- connection.sendQuery(s"INSERT INTO person (name, middle, last) VALUES('${person.name}', '${person.middle}', '${person.last}')");
       idTry <-
-      if(insert.rowsAffected==1)
-        connection
-          .sendQuery(s"SELECT LAST_INSERT_ID()")
-          .map(_.rows)
-          .map {
-          case Some(x) => Success(x.head(0).toString.toLong)
-          case None => Failure(new RuntimeException(insert.statusMessage))
-        }
-      else
-        Future.successful(Failure(new RuntimeException(insert.statusMessage)))
+        if(insert.rowsAffected==1)
+          connection
+            .sendQuery(s"SELECT LAST_INSERT_ID()")
+            .map(_.rows)
+            .map {
+            case Some(x) => Success(x.head(0).toString.toLong)
+            case None => Failure(new RuntimeException(insert.statusMessage))
+          }
+        else
+          Future.successful(Failure(new RuntimeException(insert.statusMessage)))
     ) yield idTry
+
+  override def delete(id:Long) = {
+    for(
+      connection <- db.pool().take;
+      delete <- connection.sendQuery(s"DELETE FROM person WHERE id=$id")
+    ) yield delete.rowsAffected match {
+      case 1 => Success(true)
+      case _ => Failure(new RuntimeException(delete.statusMessage))
+    }
+  }
 
   private def toPerson(rs:RowData) = Person(Some(rs("id").toString.toLong), rs("name").toString, rs("middle").toString, rs("last").toString)
 }
