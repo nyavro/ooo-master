@@ -1,20 +1,19 @@
-class CreatePersonCtrl
+class CreateEntityCtrl
+    constructor: (@$log, @$location,  @EntityService) ->
+        @$log.debug "constructing CreateEntityController"
+        @entity = {}
 
-    constructor: (@$log, @$location,  @PersonService) ->
-        @$log.debug "constructing CreatePersonsController"
-        @person = {}
-
-    createPerson: () ->
-        @$log.debug "createPerson()"
-        @PersonService.createPerson(@person)
+    create: () ->
+        @$log.debug "create Entity"
+        @EntityService.create(@entity)
         .then(
             (data) =>
-                @$log.debug "Promise returned #{data} Person"
-                @person = data
+                @$log.debug "Promise returned #{data} Entity"
+                @entity = data
                 @$location.path("/")
             ,
             (error) =>
-                @$log.error "Unable to create Person: #{error}"
-            )
+                @$log.error "Unable to create Entity: #{error}"
+        )
 
-controllersModule.controller('CreatePersonCtrl', ['$log', '$location', 'PersonService', CreatePersonCtrl])
+controllersModule.controller('CreateEntityCtrl', ['$log', '$location', 'EntityService', CreateEntityCtrl])

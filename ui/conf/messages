@@ -5,5 +5,12 @@ entity.field.name=Наименование
 entity.create.btn=Добавить
 entity.edit.btn=Редактировать
 entity.remove.btn=Удалить
+entity.save.btn=Сохранить
 
 entity.list.empty=Список юридических лиц пуст
+
+entity.form.name=Наименование
+entity.form.inn=ИНН
+entity.form.kpp=КПП
+
+button.cancel=Отменить
