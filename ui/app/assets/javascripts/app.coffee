@@ -16,8 +16,9 @@ angular.module('myApp.routeConfig', ['ngRoute'])
         ['$routeProvider', ($routeProvider) ->
             $routeProvider
                 .when('/', {templateUrl: '/assets/partials/view.html'})
-                .when('/persons/create', {templateUrl: '/assets/partials/create.html'})
+                .when('/persons/create', {templateUrl: '/assets/partials/create.scala.html'})
                 .when('/persons/edit/:id', {templateUrl: '/assets/partials/update.html'})
+                .when('/entity/create', {templateUrl: '/entity/create'})
                 .otherwise({redirectTo: '/'})
         ]
     )
