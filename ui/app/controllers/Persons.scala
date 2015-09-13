@@ -13,7 +13,7 @@ import scala.util.{Failure, Success}
 
 @Singleton
 class Persons @Inject() (repository:PersonRepository) extends Controller {
-  def find = Action.async {
+  def list = Action.async {
     repository.list()
       .map {
         Json.arr(_)

@@ -9,6 +9,9 @@ import play.api.Play.current
 import play.api.mvc._
 import services.UUIDGenerator
 import play.api.i18n.Messages
+
+import scala.concurrent.Future
+
 @Singleton
 class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
 
@@ -31,8 +34,12 @@ class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
     )
   }
 
-  def create = Action {
-    Ok(views.html.entity.create())
+  def create = Action.async {
+    Future.successful(Ok(views.html.entity.create()))
+  }
+
+  def view = Action.async {
+    Future.successful(Ok(views.html.view()))
   }
 
   private def findScripts(base: File): Seq[String] =
