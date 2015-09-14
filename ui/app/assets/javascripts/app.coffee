@@ -19,6 +19,7 @@ angular.module('myApp.routeConfig', ['ngRoute'])
                 .when('/persons/create', {templateUrl: '/assets/partials/create.html'})
                 .when('/persons/edit/:id', {templateUrl: '/assets/partials/update.html'})
                 .when('/entity/create', {templateUrl: '/entity/create'})
+                .when('/entity/edit/:id', {templateUrl: '/entity/update'})
                 .otherwise({redirectTo: '/'})
         ]
     )

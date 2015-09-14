@@ -63,4 +63,7 @@ class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
     Ok(uuidGenerator.generate.toString)
   }
 
+  def update() = Action.async {
+    Future.successful(Ok(views.html.entity.update()))
+  }
 }

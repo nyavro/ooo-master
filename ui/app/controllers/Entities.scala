@@ -31,4 +31,12 @@ class Entities @Inject() (repository:EntityRepository) extends Controller {
           }
       }.getOrElse(Future.successful(BadRequest("Invalid json")))
   }
+
+  def load(id:Long) = Action.async {
+    repository.load(id)
+      .map {
+        case Some(x) => Ok(Json.toJson(x))
+        case None => NotFound
+      }
+  }
 }

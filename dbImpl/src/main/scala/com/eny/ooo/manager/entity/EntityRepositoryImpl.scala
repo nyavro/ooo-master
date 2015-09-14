@@ -3,6 +3,7 @@ package com.eny.ooo.manager.entity
 import javax.inject.{Inject, Singleton}
 
 import com.eny.ooo.manager.connection.Db
+import com.eny.ooo.manager.person.Person
 import com.github.mauricio.async.db.RowData
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -30,13 +31,17 @@ class EntityRepositoryImpl @Inject() (db:Db) extends EntityRepository {
 
   override def delete(id: Long): Future[Try[Boolean]] = ???
 
-  override def load(id: Long): Future[Option[Entity]] = ???
+  override def load(id: Long): Future[Option[Entity]] =
+    for(
+      connection <- db.pool().take;
+      res <- connection.sendQuery(s"SELECT * FROM $Table WHERE $Id=$id")
+    ) yield res.rows.head.headOption.map(toEntity)
 
   //insert into entity (client_id, inn, kpp, name, director_id) values (1, 1234567890, 111222333, "Horns", 15);
   override def create(entity: Entity): Future[Try[Long]] =
     for(
       connection <- db.pool().take;
-      insert <- connection.sendQuery(s"INSERT INTO $Table($ClientId, $INN, $KPP, $Name, $DirectorId) VALUES(${entity.clientId}, ${entity.inn}, ${entity.kpp}, '${entity.name}', '${entity.directorId}')");
+      insert <- connection.sendQuery(s"INSERT INTO $Table($ClientId, $INN, $KPP, $Name, $DirectorId) VALUES(${entity.clientId}, ${entity.inn.orNull}, ${entity.kpp.orNull}, '${entity.name}', '${entity.directorId}')");
       idTry <-
         if(insert.rowsAffected==1)
           connection

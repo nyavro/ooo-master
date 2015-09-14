@@ -1,35 +1,35 @@
-class UpdatePersonCtrl
+class UpdateEntityCtrl
 
-  constructor: (@$log, @$location, @$routeParams, @PersonService) ->
-      @$log.debug "constructing UpdatePersonController"
-      @person = {}
-      @findPerson()
+  constructor: (@$log, @$location, @$routeParams, @EntityService) ->
+      @$log.debug "constructing UpdateEntityController"
+      @entity = {}
+      @find()
 
-  updatePerson: () ->
-      @$log.debug "updatePerson()"
-      @PersonService.updatePerson(@$routeParams.id, @person)
+  update: () ->
+      @$log.debug "update Entity"
+      @EntityService.update(@$routeParams.id, @entity)
       .then(
           (data) =>
-            @$log.debug "Promise returned #{data} Person"
-            @person = data
+            @$log.debug "Promise returned #{data} Entity"
+            @entity = data
             @$location.path("/")
         ,
         (error) =>
-            @$log.error "Unable to update Person: #{error}"
+            @$log.error "Unable to update Entity: #{error}"
       )
 
-  findPerson: () ->
+  find: () ->
       id = @$routeParams.id
-      @$log.debug "findPerson route params: #{id}"
+      @$log.debug "findEntity route params: #{id}"
 
-      @PersonService.load(id)
+      @EntityService.load(id)
         .then(
           (data) =>
-            @$log.debug "Promise returned person"
-            @person = data
+            @$log.debug "Promise returned entity"
+            @entity = data
           ,
           (error) =>
-            @$log.error "Unable to get Person: #{error}"
+            @$log.error "Unable to get Entity: #{error}"
         )
 
-controllersModule.controller('UpdatePersonCtrl', ['$log', '$location', '$routeParams', 'PersonService', UpdatePersonCtrl])
+controllersModule.controller('UpdateEntityCtrl', ['$log', '$location', '$routeParams', 'EntityService', UpdateEntityCtrl])

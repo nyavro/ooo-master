@@ -1,7 +1,7 @@
 class CreateEntityCtrl
     constructor: (@$log, @$location,  @EntityService) ->
         @$log.debug "constructing CreateEntityController"
-        @entity = {}
+        @entity = {clientId:1, directorId:15}
 
     create: () ->
         @$log.debug "create Entity"

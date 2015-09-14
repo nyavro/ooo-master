@@ -10,7 +10,7 @@ class EntityService
   list: (clientId) ->
     @$log.debug "#{name}:list #{clientId}"
     deferred = @$q.defer()
-    @$http.get("/entities/#{clientId}")
+    @$http.get("/entities/list/#{clientId}")
       .success((data, status, headers) =>
         @$log.info("Successfully listed #{name} - status #{status}")
         deferred.resolve(data)
