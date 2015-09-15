@@ -20,6 +20,7 @@ DELETE        /persons/:id                    @controllers.Persons.delete(id:Lon
 GET           /entities/list/:clientId        @controllers.Entities.list(clientId:Long)
 GET           /entities/:id                   @controllers.Entities.load(id:Long)
 POST          /entities                       @controllers.Entities.create
+DELETE        /entities/:id                   @controllers.Entities.delete(id:Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

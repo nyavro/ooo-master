@@ -29,7 +29,15 @@ class EntityRepositoryImpl @Inject() (db:Db) extends EntityRepository {
 
   override def update(id: Long, entity: Entity): Future[Option[Boolean]] = ???
 
-  override def delete(id: Long): Future[Try[Boolean]] = ???
+  override def delete(id: Long) = {
+    for(
+      connection <- db.pool().take;
+      delete <- connection.sendQuery(s"DELETE FROM $Table WHERE id=$id")
+    ) yield delete.rowsAffected match {
+      case 1 => Success(true)
+      case _ => Failure(new RuntimeException(delete.statusMessage))
+    }
+  }
 
   override def load(id: Long): Future[Option[Entity]] =
     for(
