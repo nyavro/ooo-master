@@ -62,6 +62,7 @@ object ProjectBuild extends Build {
       "org.webjars" % "bootstrap" % "3.3.4",
       "org.webjars" % "angularjs" % "1.3.15",
       "org.webjars" % "angular-ui-bootstrap" % "0.13.0",
+      "org.webjars" % "angular-ui-router" % "0.2.15",
       "org.mockito" % "mockito-core" % "1.10.19" % "test"
     ),
     resolvers ++= Seq(
