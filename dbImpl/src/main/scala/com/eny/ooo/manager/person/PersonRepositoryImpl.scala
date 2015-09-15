@@ -24,13 +24,13 @@ class PersonRepositoryImpl @Inject() (db:Db) extends PersonRepository {
       res <- connection.sendQuery("SELECT * FROM person")
     ) yield res.rows.head.toList.map(toPerson)
 
-  override def update(id:Long, person:Person): Future[Option[Person]] =
+  override def update(id:Long, person:Person): Future[Try[Boolean]] =
     for(
       connection <- db.pool().take;
       res <- connection.sendQuery(s"UPDATE person SET name='${person.name}', middle='${person.middle}', last='${person.last}' WHERE id=$id")
     ) yield {
-      if(res.rowsAffected==1) Some(person)
-      else None
+      if(res.rowsAffected==1) Success(true)
+      else Failure(new RuntimeException(res.statusMessage))
     }
 
   override def create(person: Person): Future[Try[Long]] =

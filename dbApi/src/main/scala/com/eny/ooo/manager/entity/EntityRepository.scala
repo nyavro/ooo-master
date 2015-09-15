@@ -9,7 +9,7 @@ trait EntityRepository {
 
   def load(id:Long):Future[Option[Entity]]
 
-  def update(id:Long, entity:Entity):Future[Option[Boolean]]
+  def update(id:Long, entity:Entity):Future[Try[Boolean]]
 
   def create(entity:Entity):Future[Try[Long]]
 

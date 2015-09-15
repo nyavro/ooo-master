@@ -27,7 +27,14 @@ class EntityRepositoryImpl @Inject() (db:Db) extends EntityRepository {
       res <- connection.sendQuery(s"SELECT * FROM $Table WHERE $ClientId=$clientId")
     ) yield res.rows.head.toList.map(toEntity)
 
-  override def update(id: Long, entity: Entity): Future[Option[Boolean]] = ???
+  override def update(id: Long, entity: Entity): Future[Try[Boolean]] =
+    for(
+      connection <- db.pool().take;
+      res <- connection.sendQuery(s"UPDATE $Table SET $Name='${entity.name}', $INN='${entity.inn.orNull}', $KPP='${entity.kpp.orNull}, $DirectorId=${entity.directorId}' WHERE id=$id")
+    ) yield {
+      if(res.rowsAffected==1) Success(true)
+      else Failure(new RuntimeException(res.statusMessage))
+    }
 
   override def delete(id: Long) = {
     for(
