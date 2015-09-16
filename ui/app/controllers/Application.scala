@@ -17,6 +17,10 @@ class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Application])
 
+  def partial_home = Action.async {
+    Future.successful(Ok(views.html.partial_home()))
+  }
+
   def index = Action {
     request =>
     logger.info("Serving index page...")

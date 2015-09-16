@@ -60,7 +60,7 @@ object ProjectBuild extends Build {
       "com.google.inject" % "guice" % "4.0",
       "javax.inject" % "javax.inject" % "1",
       "org.webjars" % "bootstrap" % "3.3.4",
-      "org.webjars" % "angularjs" % "1.3.15",
+      "org.webjars" % "angularjs" % "1.4.4",
       "org.webjars" % "angular-ui-bootstrap" % "0.13.0",
       "org.webjars" % "angular-ui-router" % "0.2.15",
       "org.mockito" % "mockito-core" % "1.10.19" % "test"
