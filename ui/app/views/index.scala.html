@@ -19,24 +19,55 @@
     <body ng-app="routerApp">
 
             <!-- NAVIGATION -->
-        <nav class="navbar navbar-inverse" role="navigation">
-            <div class="navbar-header">
-                <a class="navbar-brand" ui-sref="#">AngularUI Router</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li><a ui-sref="home">Home</a></li>
-                <li><a ui-sref="about">About</a></li>
-            </ul>
-        </nav>
+        @*<nav class="navbar navbar-inverse" role="navigation">*@
+            @*<div class="navbar-header">*@
+                @*<a class="navbar-brand" ui-sref="#">AngularUI Router</a>*@
+            @*</div>*@
+            @*<ul class="nav navbar-nav">*@
+                @*<li><a ui-sref="home">Home</a></li>*@
+                @*<li><a ui-sref="about">About</a></li>*@
+            @*</ul>*@
+        @*</nav>*@
 
             <!-- MAIN CONTENT -->
-        <div class="container">
+        @*<div class="container">*@
 
                 <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-            <div ui-view></div>
+            @*<div ui-view></div>*@
 
+        @*</div>*@
+        <div ng-init="test=f">
+            <p ng-show="test">123</p>
+            <p ng-hide="test">345</p>
+            <input type="button" value="toggle" ng-click="test = !test">
         </div>
-
+        <div>
+            <input type="text" value="empty" ng-model="textval"/>
+            <p ng-bind="textval"></p>
+        </div>
+        <div>
+            <input type="checkbox" value="empty" ng-model="check" ng-init="check = true"/>
+            <input type="button" value="toggle" ng-click="check = !check">
+        </div>
+        <div>
+            <input type="checkbox" value="empty" ng-model="textval" ng-true-value='"love it"'/>
+        </div>
+        <div>
+            <select ng-model="answer" ng-init="answer = 'no'">
+                <option value="yes">YES</option>
+                <option value="no">NO</option>
+                <option value="maybe">MAYBE</option>
+            </select>
+            {{answer}}
+        </div>
+        <div>
+            <input type="radio" ng-model="answer" value="yes"/> Yes
+            <input type="radio" ng-model="answer" value="no"/> No
+            <input type="radio" ng-model="answer" value="maybe"/> Maybe
+        </div>
+        <div ng-controller="EmptyController as controller">
+            <input type="text" ng-model="message"/>
+        </div>
     </body>
 </html>
 
