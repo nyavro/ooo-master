@@ -5,6 +5,7 @@ class EntityCtrl
     constructor: (@$log, @EntityService, @$location) ->
         @$log.debug "constructing #{name} Controller"
         @entities = []
+        @test = "OK"
         @loadAll(1)
 
     loadAll: (clientId) ->

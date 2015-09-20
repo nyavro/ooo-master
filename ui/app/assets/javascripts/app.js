@@ -1,20 +1,26 @@
-var routerApp = angular.module('routerApp', ['ui.router']);
+var dependencies = [
+    'ui.router',
+    'app.servicesModule',
+    'app.controllers',
+    'app.directives',
+    'app.common '
+];
+var app = angular.module('app', dependencies);
 
-routerApp.config(
+app.config(
     function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home');
         $stateProvider
-        // HOME STATES AND NESTED VIEWS ========================================
-        .state('home', {
-                url: '/home',
-                templateUrl: 'partial_home'
-            }
-        )
-        // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
-        .state('about', {
-            // we'll get to this in a bit
-            }
-        );
+            .state('home', {
+                    url: '/home',
+                    templateUrl: 'partial_home'
+                }
+            )
+            .state('about', {
+                    url: '/about',
+                    templateUrl: 'partial_about'
+                }
+            );
     }
 ).config([
         '$controllerProvider', function($controllerProvider) {
@@ -23,6 +29,7 @@ routerApp.config(
     ]
 );
 
-function EmptyController($scope) {
-    $scope.message = "hello, man!";
-}
+servicesModule = angular.module('app.servicesModule', []);
+controllersModule = angular.module('app.controllers', []);
+directivesModule = angular.module('app.directives', []);
+commonModule = angular.module('app.common', []);

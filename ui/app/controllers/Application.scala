@@ -21,6 +21,10 @@ class Application @Inject() (uuidGenerator: UUIDGenerator) extends Controller {
     Future.successful(Ok(views.html.partial_home()))
   }
 
+  def partial_about = Action.async {
+    Future.successful(Ok(views.html.partial_about()))
+  }
+
   def index = Action {
     request =>
     logger.info("Serving index page...")
