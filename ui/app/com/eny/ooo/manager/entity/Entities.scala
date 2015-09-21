@@ -1,9 +1,8 @@
-package controllers
+package com.eny.ooo.manager.entity
 
 import javax.inject.{Inject, Singleton}
 
 import com.eny.ooo.manager.entity.EntityJsonFormat._
-import com.eny.ooo.manager.entity.{Entity, EntityRepository}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.validation.Constraints._
@@ -27,13 +26,14 @@ class Entities @Inject() (repository:EntityRepository) extends Controller {
   }
 
   def create() = Action.async(parse.json) {
-    request =>
-      request.body.validate[Entity].map {
+    implicit request =>
+      form.bindFromRequest.fold(
+        formWithErrors => Future.successful(BadRequest("Error occured")),
         entity =>
           repository.create(entity).map {
             res => res.map { _ => Created(s"Entity Created")}.getOrElse(BadRequest("Error creating Entity"))
           }
-      }.getOrElse(Future.successful(BadRequest("Invalid json")))
+      )
   }
 
   def load(id:Long) = Action.async {

@@ -11,6 +11,7 @@ object ProjectBuild extends Build {
   val ScalaVersion = "2.11.7"
   val ScalatestVersion = "3.0.0-M7"
   val MysqlAsyncVersion = "0.2.18"
+  val JQueryVersion = "2.1.4"
 
   lazy val parent = Project(
     id = "parent",
@@ -63,6 +64,7 @@ object ProjectBuild extends Build {
       "org.webjars" % "angularjs" % "1.4.4",
       "org.webjars" % "angular-ui-bootstrap" % "0.13.0",
       "org.webjars" % "angular-ui-router" % "0.2.15",
+      "org.webjars" % "jquery" % JQueryVersion,
       "org.mockito" % "mockito-core" % "1.10.19" % "test"
     ),
     resolvers ++= Seq(

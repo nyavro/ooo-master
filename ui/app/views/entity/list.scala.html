@@ -19,18 +19,31 @@
             <table id="entity_list" class="table table-striped">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>@Messages("entity.field.name")</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="entity in ec.entities | filter:searchText">
+                        <td>
+                            {{$index+1}}
+                        </td>
+                        <td>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"/>
+                                </label>
+                            </div>
+                        </td>
                         <td>{{entity.name}}</td>
-                        <td>
-                            <a ng-href="/#/entity/edit/{{entity.id}}" class="btn btn-success pull-right" id="btn_entity_update">@Messages("entity.edit.btn")</a>
-                        </td>
-                        <td>
-                            <a ng-click="ec.delete(entity.id)" class="btn btn-success pull-right" id="btn_entity_delete">@Messages("entity.remove.btn")</a>
-                        </td>
+                        <td>{{entity.inn}}</td>
+                        <td>{{entity.kpp}}</td>
+                        @*<td>*@
+                            @*<a ng-href="/#/entity/edit/{{entity.id}}" class="btn btn-success pull-right" id="btn_entity_update">@Messages("entity.edit.btn")</a>*@
+                        @*</td>*@
+                        @*<td>*@
+                            @*<a ng-click="ec.delete(entity.id)" class="btn btn-success pull-right" id="btn_entity_delete">@Messages("entity.remove.btn")</a>*@
+                        @*</td>*@
                     </tr>
                     <tr ng-hide="ec.entities.length">
                         <td colspan="3">
@@ -53,6 +66,5 @@
                 </accordion-group>
             </accordion>
         </div>
-
     </div>
 </div>

@@ -1,4 +1,7 @@
 person.create=Create Person
+entity.main.menu.title.plural=Юридические лица
+entity.main.menu.add.title=Добавить
+entity.main.menu.list.title=Список
 entity.plural=Юридические лица
 entity.create.title=Добавление юридического лица
 entity.edit.title=Редактирование юридического лица

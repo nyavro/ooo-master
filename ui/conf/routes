@@ -17,14 +17,17 @@ PUT           /persons/:id                    @controllers.Persons.update(id:Lon
 POST          /persons                        @controllers.Persons.create
 DELETE        /persons/:id                    @controllers.Persons.delete(id:Long)
 
-GET           /entities/list/:clientId        @controllers.Entities.list(clientId:Long)
-GET           /entities/:id                   @controllers.Entities.load(id:Long)
-PUT           /entities/:id                   @controllers.Entities.update(id:Long)
-POST          /entities                       @controllers.Entities.create
-DELETE        /entities/:id                   @controllers.Entities.delete(id:Long)
+GET           /entities/list/:clientId        @com.eny.ooo.manager.entity.Entities.list(clientId:Long)
+GET           /entities/:id                   @com.eny.ooo.manager.entity.Entities.load(id:Long)
+PUT           /entities/:id                   @com.eny.ooo.manager.entity.Entities.update(id:Long)
+POST          /entities                       @com.eny.ooo.manager.entity.Entities.create
+DELETE        /entities/:id                   @com.eny.ooo.manager.entity.Entities.delete(id:Long)
+GET           /entity/listView                @com.eny.ooo.manager.entity.Views.list
+GET           /entity/createView              @com.eny.ooo.manager.entity.Views.create
 
 GET           /partial_home                   @controllers.Application.partial_home
 GET           /partial_about                  @controllers.Application.partial_about
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                   controllers.Assets.versioned(path="/public", file: Asset)
