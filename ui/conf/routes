@@ -24,6 +24,7 @@ POST          /entities                       @com.eny.ooo.manager.entity.Entiti
 DELETE        /entities/:id                   @com.eny.ooo.manager.entity.Entities.delete(id:Long)
 GET           /entity/listView                @com.eny.ooo.manager.entity.Views.list
 GET           /entity/createView              @com.eny.ooo.manager.entity.Views.create
+GET           /entity/updateView              @com.eny.ooo.manager.entity.Views.update
 
 GET           /partial_home                   @controllers.Application.partial_home
 GET           /partial_about                  @controllers.Application.partial_about

@@ -9,3 +9,7 @@ footer {
     text-align: center;
 }
 
+table {
+    border-spacing: 2px;
+    border-color: gray;
+}

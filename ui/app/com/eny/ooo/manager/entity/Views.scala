@@ -16,4 +16,8 @@ class Views extends Controller {
   def create = Action.async {
     Future(Ok(views.html.entity.create()))
   }
+
+  def update = Action.async {
+    Future(Ok(views.html.entity.update()))
+  }
 }
