@@ -12,6 +12,7 @@ object ProjectBuild extends Build {
   val ScalatestVersion = "3.0.0-M7"
   val MysqlAsyncVersion = "0.2.18"
   val JQueryVersion = "2.1.4"
+  val ApacheCommonsVersion = "2.4"
 
   lazy val parent = Project(
     id = "parent",
@@ -21,7 +22,7 @@ object ProjectBuild extends Build {
   .settings(
     name := "OOO Master Utility"
   )
-  .aggregate(ui, dbApi, dbImpl)
+  .aggregate(ui, dbApi, dbImpl, templateUtil)
 
   lazy val dbApi = Project(
     id = "dbApi",
@@ -80,6 +81,20 @@ object ProjectBuild extends Build {
   )
   .enablePlugins(PlayScala)
   .dependsOn(dbApi, dbImpl % "runtime")
+
+  lazy val templateUtil = Project(
+    id = "templateUtil",
+    base = file("templateUtil"),
+    settings = super.settings ++ sharedSettings
+  )
+  .settings(
+    libraryDependencies ++= Seq(
+      "commons-io" % "commons-io" % ApacheCommonsVersion
+    ),
+    resolvers ++= Seq(
+      "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
+    )
+  )
 
   lazy val sharedSettings = super.settings ++ Seq(
     version := "1.0.0",
