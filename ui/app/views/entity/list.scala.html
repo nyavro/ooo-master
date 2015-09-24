@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="entity in ec.entities | filter:searchText" ui-sref="editEntity({ portfolioId: 1 })">
+                    <tr ng-repeat="entity in ec.entities | filter:searchText" ui-sref="editEntity({ id: entity.id })">
                         <th scope="row" class="bs-checkbox"><input data-index="$index" name="btSelectItem" type="checkbox"></th>
                         <td>{{entity.name}}</td>
                         <td>{{entity.inn}}</td>

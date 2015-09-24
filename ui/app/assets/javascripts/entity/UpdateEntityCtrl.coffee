@@ -1,13 +1,13 @@
 class UpdateEntityCtrl
 
-  constructor: (@$log, @$location, @$routeParams, @EntityService) ->
-      @$log.debug "constructing UpdateEntityController"
+  constructor: (@$log, @$location, @stateParams, @EntityService) ->
+      @$log.debug "constructing UpdateEntityController id=#{@stateParams.id}"
       @entity = {}
       @find()
 
   update: () ->
       @$log.debug "update Entity"
-      @EntityService.update(@$routeParams.id, @entity)
+      @EntityService.update(@stateParams.id, @entity)
       .then(
           (data) =>
             @$log.debug "Promise returned #{data} Entity"
@@ -19,7 +19,7 @@ class UpdateEntityCtrl
       )
 
   find: () ->
-      id = @$routeParams.id
+      id = @stateParams.id
       @$log.debug "findEntity route params: #{id}"
 
       @EntityService.load(id)
@@ -32,4 +32,4 @@ class UpdateEntityCtrl
             @$log.error "Unable to get Entity: #{error}"
         )
 
-controllersModule.controller('UpdateEntityCtrl', ['$log', '$location', '$routeParams', 'EntityService', UpdateEntityCtrl])
+controllersModule.controller('UpdateEntityCtrl', ['$log', '$location', '$stateParams', 'EntityService', UpdateEntityCtrl])

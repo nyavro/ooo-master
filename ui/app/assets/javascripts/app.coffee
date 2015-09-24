@@ -14,10 +14,7 @@ angular.module('app', dependencies)
         .state('about', {url: '/about', templateUrl: 'partial_about'})
         .state('createEntity', {url: '/entity.create', templateUrl: 'entity/createView'})
         .state('listEntity', {url: '/entity.list', templateUrl: 'entity/listView'})
-        .state('editEntity', {url: '/entity.update/:portfolioId', templateUrl: 'entity/updateView', controller: ($scope, $stateParams) ->
-            alert($stateParams.portfolioId)
-            $scope.portfolioId = $stateParams.portfolioId
-        })
+        .state('editEntity', {url: '/entity.update/:id', templateUrl: 'entity/updateView'})
   )
 @servicesModule = angular.module('app.servicesModule', [])
 @controllersModule = angular.module('app.controllers', [])
