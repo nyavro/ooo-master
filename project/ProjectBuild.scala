@@ -13,6 +13,7 @@ object ProjectBuild extends Build {
   val MysqlAsyncVersion = "0.2.18"
   val JQueryVersion = "2.1.4"
   val ApacheCommonsVersion = "2.4"
+  val SpecsVersion = "3.0.0-M9"
 
   lazy val parent = Project(
     id = "parent",
@@ -89,7 +90,8 @@ object ProjectBuild extends Build {
   )
   .settings(
     libraryDependencies ++= Seq(
-      "commons-io" % "commons-io" % ApacheCommonsVersion
+      "commons-io" % "commons-io" % ApacheCommonsVersion,
+      "org.scalatest" % "scalatest_2.11" % "2.1.6" % "test" withSources() withJavadoc()
     ),
     resolvers ++= Seq(
       "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
